@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./frontend/index.css">
+    <title>Doctors App</title>
+</head>
+<body>
+    <nav>
+        <h2><a href="">Signup/Login</a></h2>
+        <h2><a href="">Onbord Doctors</a></h2>
+        <h2><a href="">Doctors Dashboard</a></h2>
+    </nav>
+
+    <div id="container">
+     <div class="toggle">
+        <div id="button">
+            <h3 style="background-color: skyblue; padding: 5px; color: white;"><a href="index.html">Signup</a></h3>
+           <h3><a href="./frontend/signin.html">Login</a></h3>
+        </div>
+         <input style="display: block; margin-top: 15px;" type="text" placeholder="Email" id="email">
+         <input style="display: block; margin-top: 15px;" type="text" placeholder="Password" id = "password">
+         <input style="display: block; margin-top: 15px;" type="text" placeholder="Confirm Password" id="password1">
+         <button style="margin-top: 15px; color: white; background-color: blue;" onclick="signup()">Creat Account</button>
+     </div>
+    </div>
+    
+</body>
+<script>
+    function signup(){
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
+        const checkpass = document.getElementById("password1").value
+        if(password !== checkpass){
+            return alert("Both password should match")
+        }
+
+        const payload = {email,password}
+
+        fetch("http://localhost:8000/doctors/signup",{
+            method:"POSt",
+            headers:{
+                "Content-type":"application/json"
+            },
+            body:JSON.stringify(payload)
+        }).then(res=>res.json())
+        .then(res=>{
+            alert(res.message)
+            if(res.message == "Account created"){
+              window.location.href="./frontend/signin.html"
+            }
+        })
+    }
+</script>
+
+</html>

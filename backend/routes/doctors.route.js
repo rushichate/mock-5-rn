@@ -5,7 +5,7 @@ const { DoctorsModel } = require("../models/doctor.model");
 const doctorsRouter = express.Router()
 
 
-doctorsRouter.post("/signiup",async(req,res)=>{
+doctorsRouter.post("/signup",async(req,res)=>{
     const {email,password} = req.body;
     try{
        const isEmailPresent = await DoctorsModel.findOne({email})
@@ -36,7 +36,7 @@ doctorsRouter.post("/login",async(req,res)=>{
         }
 
         const token = jwt.sign({email:isEmailValid.email},"masai",{expiresIn:"10m"})
-        res.status(200).json({message:"Login success"})
+        res.status(200).json({message:"Login success",token:token})
     }catch(error){
         res.status(400).json(error.message)
     }

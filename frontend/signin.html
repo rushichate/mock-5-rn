@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>SignIn</title>
+</head>
+<body>
+    <nav>
+        <h2><a href="">Signup/Login</a></h2>
+        <h2><a href="./onboard.html">Onbord Doctors</a></h2>
+        <h2><a href="">Doctors Dashboard</a></h2>
+    </nav>
+
+    <div id="container">
+     <div class="toggle">
+        <div id="button">
+            <h3><a href="../index.html">Signup</a></h3>
+           <h3 style="background-color: skyblue; padding: 5px; color: white;"><a href="./frontend/signin.html">Login</a></h3>
+        </div>
+         <input style="display: block; margin-top: 15px; " type="text" placeholder="Email" id="email">
+         <input style="display: block; margin-top: 15px;" type="text" placeholder="Password" id = "password">
+         <button style="margin-top: 15px; color: white; background-color: blue;" onclick="signin()">Creat Account</button>
+     </div>
+    </div>
+    
+</body>
+<script>
+    function signin(){
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
+
+
+        const payload = {email,password}
+
+        fetch("http://localhost:8000/doctors/login",{
+            method:"POSt",
+            headers:{
+                "Content-type":"application/json"
+            },
+            body:JSON.stringify(payload)
+        }).then(res=>res.json())
+        .then(res=>{
+            localStorage.setItem("token",res.token)
+            alert(res.message)
+            if(res.message == "Login success"){
+              window.location.href="./onboard.html"
+            }
+        })
+    }
+</script>
+
+</html>
