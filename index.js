@@ -3,6 +3,7 @@ const cors = require("cors")
 const { connection } = require("./backend/db")
 const { doctorsRouter } = require("./backend/routes/doctors.route")
 const { onboardRouter } = require("./backend/routes/onboard.route")
+const { dashboardRouter } = require("./backend/routes/dashboard.route")
 require("dotenv").config()
 const app = express()
 
@@ -15,6 +16,7 @@ app.get("/",(req,res)=>{
 
 app.use("/doctors",doctorsRouter)
 app.use("/onboards",onboardRouter)
+app.use("/dash",dashboardRouter)
 
 app.listen(process.env.port,async()=>{
   try{
