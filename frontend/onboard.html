@@ -11,6 +11,9 @@
     background-color: aqua;
     
 }
+input{
+    display: block;
+}
     </style>
 </head>
 <body> 
@@ -19,5 +22,54 @@
         <h2><a href="./onboard.html">Onbord Doctors</a></h2>
         <h2><a href="./dashboard.html">Doctors Dashboard</a></h2>
     </nav>
+    <form action="">
+        <input type="text" placeholder="Name" id="name">
+        <input type="text" placeholder="imageURL" id="url">
+        <h3>Select Specialization</h3>
+        <select id="specialization">
+        <option value="cardiologist">Cardiologist</option>
+        <option value="dermatologist">Dermatologist</option>
+        <option value="pediatrician">Pediatrician</option>
+        <option value="psychiatrist">Psychiatrist</option>
+        </select>
+        <input type="text" placeholder="Experience" id="exp">
+        <input type="text" placeholder="Location" id="location">
+        <input type="date"  id="date">
+        <input type="number" placeholder="Slots" id="slots">
+        <input type="number" placeholder="fee" id="fee">
+        <button onclick="onboard()">Submit</button>
+    </form>
 </body>
+  <script>
+
+    const token = localStorage.getItem("token")
+    function onboard(){
+        name = document.getElementById("name").value
+        imageUrl = document.getElementById("url").value 
+        specialization = document.getElementById("specialization").value
+        experience = document.getElementById("exp").value 
+        location = document.getElementById("location").value 
+        date = document.getElementById("date").value
+        slots = document.getElementById("slots").value
+        fee = document.getElementById("fee").value
+
+        const payload = {name,imageUrl,specialization,experience,location,date,slots,fee}
+
+        fetch("https://odd-pear-hippo-hose.cyclic.app/onboards/appointments",{
+            method:"POST",
+            headers:{
+                "Content-type":"application/json",
+                'Authorization': `${token}`
+            },
+            body:JSON.stringify(payload)
+        }).then(res=>res.json())
+        .then(res=>{
+            alert(res.message)
+            if(res.message == "Onboard Successful"){
+              window.location.href="./dashboard.html"
+            }
+        })
+    }
+  </script>
+ 
 </html>
